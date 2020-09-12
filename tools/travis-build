@@ -83,7 +83,7 @@ for target in "${targets[@]}" ; do
   CFLAGS="-g0 -Os" \
   ./configure \
     --target=$target \
-    --prefix=/usr \
+    --prefix=/ \
     --with-include=$(pwd)/tools/cross/${target}/include \
     --with-lib=$(pwd)/tools/cross/${target}/lib \
     --with-sysdeps=$(pwd)/tools/cross/${target}/lib/skalibs/sysdeps \
@@ -92,14 +92,13 @@ for target in "${targets[@]}" ; do
   ${target}-strip s6-overlay-preinit
   make DESTDIR=dist/${target} install
   make clean
-  rm -rf dist/${target}/usr/include
 
   printf "Making tarball for $target\n"
   tar cvzf dist/s6-overlay-preinit-${versions[s6-overlay-preinit]}-linux-${target_short[$target]}.tar.gz \
     -C dist/${target} \
     --owner 0 \
     --group 0 \
-    usr
+    bin
 done
 
 printf 'Built using `skalibs-%s`\n' "${versions[skalibs]}" > dist/release.md
