@@ -1,0 +1,6 @@
+/config.mak
+/s6-overlay-preinit
+*.o
+/tools/downloads
+/tools/cross
+/dist
