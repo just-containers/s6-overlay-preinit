@@ -65,12 +65,6 @@ int main (int argc, char const *const *argv)
     strerr_diefu2sys(111,"chown ", sa.s) ;
   }
 
-  /* if running with suid bit set, uid = intended user, euid = root */
-  if(seteuid(getuid()) == -1)
-  {
-      strerr_diefu1sys(111,"seteuid") ;
-  }
-
   stralloc_free(&sa) ;
   return 0;
 
