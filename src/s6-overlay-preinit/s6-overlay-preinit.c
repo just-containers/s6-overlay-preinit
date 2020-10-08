@@ -44,9 +44,21 @@ int main (void)
   }
 
   /* requirement: /var/run/s6 must be owned by current user */
-  if(chown(VAR_RUN_S6,getuid(),getgid()) == -1)
+  struct stat s6stat ;
+  if(stat(VAR_RUN_S6, &s6stat) == -1)
   {
-    strerr_diefu2sys(111,"chown ", VAR_RUN_S6) ;
+    strerr_diefu2sys(111, "stat ", VAR_RUN_S6) ;
+  }
+
+  uid_t uid = getuid() ,
+        gid = getgid() ;
+  /* only call chown if uid/gid are not from current user */
+  if(s6stat.st_uid != uid || s6stat.st_gid != gid) 
+  {
+    if (chown(VAR_RUN_S6, uid, gid) == -1)
+    {
+      strerr_diefu2sys(111, "chown ", VAR_RUN_S6) ;
+    }
   }
 
   return 0;
