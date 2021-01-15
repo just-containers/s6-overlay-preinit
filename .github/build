@@ -30,7 +30,7 @@ target_short[arm-linux-musleabihf]="armhf"
 target_short[powerpc64le-linux-musl]="ppc64le"
 
 declare -A versions
-versions[s6-overlay-preinit]=1.0.3
+versions[s6-overlay-preinit]=$(grep version package/info | cut -d'=' -f2)
 
 skaware_release=v2.0.2
 musl_make_release=v15
@@ -50,16 +50,6 @@ while read -r line ; do
     versions[$key]="$value"
   fi
 done < tools/downloads/manifest.txt
-
-if [[ ! -f "tools/downloads/linux-amd64-github-release.bz2" ]] ; then
-  printf "Downloading tools/downloads/linux-amd64-github-release.bz2\n"
-  curl -s -R -L -o "tools/downloads/linux-amd64-github-release.bz2" \
-    "https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2"
-fi
-
-bunzip2 "tools/downloads/linux-amd64-github-release.bz2"
-mv "tools/downloads/linux-amd64-github-release" "tools/cross/bin/github-release"
-chmod +x "tools/cross/bin/github-release"
 
 for target in "${targets[@]}" ; do
   gccurl="$musl_cross_make/gcc-${gccver}-${target}.tar.xz"
