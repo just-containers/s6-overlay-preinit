@@ -6,13 +6,9 @@
 
 #include <skalibs/strerr2.h>
 
-#define USAGE "s6-overlay-preinit /var/run"
-
-static const char *VAR_RUN = "/var/run" ;
+static const char *VAR        = "/var" ;
+static const char *VAR_RUN    = "/var/run" ;
 static const char *VAR_RUN_S6 = "/var/run/s6" ;
-
-static const char *VAR_LOG = "/var/log" ;
-static const char *VAR_LOG_S6 = "/var/log/s6" ;
 
 int main (void)
 {
@@ -23,6 +19,16 @@ int main (void)
    * then drops privileges and calls the rest of argv. Meant to run as
    * the very first step in s6-overlay's init script
    */
+
+  /* requirement: /var must exist */
+  if(mkdir(VAR, 0755) == -1)
+  {
+    if(errno != EEXIST)
+    {
+        /* /var does not exist and we were unable to create it */
+        strerr_diefu2sys(111, "mkdir ", VAR) ;
+    }
+  }
 
   /* requirement: /var/run must exist */
   if(mkdir(VAR_RUN, 0755) == -1)

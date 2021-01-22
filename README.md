@@ -10,13 +10,14 @@ gain privileges to create the `/var/run/s6` directory.
 
 ## Usage
 
-`s6-overlay-preinit /var/run`
+`s6-overlay-preinit (prog)`
 
 This will:
 
-* create `/var/run` if needed (ie, using a read-only root filesystem).
-* create `/var/run/s6`.
-* chown `/var/run/s6` to the current UID/GID (set if using `USER` directive).
+* Create `/var`.
+* Create `/var/run`.
+* Create `/var/run/s6`.
+* `chown` `/var/run/s6` to the current UID/GID (set if using `USER` directive).
 
 ## LICENSE
 
