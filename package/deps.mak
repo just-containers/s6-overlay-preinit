@@ -4,5 +4,5 @@
 
 src/s6-overlay-preinit/s6-overlay-preinit.o src/s6-overlay-preinit/s6-overlay-preinit.lo: src/s6-overlay-preinit/s6-overlay-preinit.c
 
-s6-overlay-preinit: EXTRA_LIBS :=
-s6-overlay-preinit: src/s6-overlay-preinit/s6-overlay-preinit.o -lskarnet
+s6-overlay-preinit: EXTRA_LIBS := -lskarnet
+s6-overlay-preinit: src/s6-overlay-preinit/s6-overlay-preinit.o
